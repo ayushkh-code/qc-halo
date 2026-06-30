@@ -1,0 +1,20 @@
+{
+  "name": "halo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "catchment.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "serve . -p 8080",
+    "test": "node test-browser.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}
