@@ -28,25 +28,68 @@
 
     html, body {
       margin: 0;
-      height: 100%;
+      min-height: 100%;
       font-family: var(--font-sans);
       font-size: 13px;
       color: var(--text);
       background: var(--rail-bg);
     }
 
+    @media (min-width: 900px) {
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+
     .app {
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
     }
 
     .map-panel {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 0;
+      flex: none;
+      width: 100%;
+      height: 50vh;
+      height: 50dvh;
+      min-height: 280px;
       position: relative;
-      height: 100%;
+    }
+
+    .rail {
+      width: 100%;
+      flex-shrink: 0;
+      background: var(--rail-bg);
+      border-bottom: 1px solid var(--rail-border);
+      overflow-y: visible;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 900px) {
+      .app {
+        flex-direction: row-reverse;
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .map-panel {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
+      }
+
+      .rail {
+        width: var(--rail-width);
+        border-bottom: none;
+        border-left: 1px solid var(--rail-border);
+        overflow-y: auto;
+      }
     }
 
     #map {
@@ -133,16 +176,6 @@
       padding: 6px 10px;
       border-radius: 3px;
       pointer-events: none;
-    }
-
-    .rail {
-      width: var(--rail-width);
-      flex-shrink: 0;
-      background: var(--rail-bg);
-      border-left: 1px solid var(--rail-border);
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
     }
 
     .rail-section {
@@ -319,6 +352,122 @@
     input[type="range"]:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
+    }
+
+    input[type="number"].num-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--rail-border);
+      border-radius: 3px;
+      background: var(--rail-surface);
+      color: #eef2f7;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    input[type="number"].num-input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .recommend-block {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rail-border);
+    }
+
+    .optimize-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .optimize-grid button {
+      padding: 8px 10px;
+      border: 1px solid var(--rail-border);
+      border-radius: 3px;
+      background: var(--rail-surface);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    .optimize-grid button.active {
+      border-color: var(--accent);
+      background: #2d4a3e;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .optimize-grid button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .btn-recommend {
+      width: 100%;
+      padding: 9px 12px;
+      border: none;
+      border-radius: 3px;
+      background: var(--accent);
+      color: #0f1a14;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-recommend:hover { background: #4de09e; }
+    .btn-recommend:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .btn-recommend:focus-visible {
+      outline: 2px solid #eef2f7;
+      outline-offset: 2px;
+    }
+
+    .recommend-results {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .recommend-results ol {
+      margin: 6px 0 0;
+      padding-left: 18px;
+    }
+
+    .recommend-results li { margin-bottom: 4px; }
+    .recommend-results strong { color: #eef2f7; font-weight: 600; }
+    .recommend-summary {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--rail-border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .recommend-pin {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #1a2332;
+      color: #1a2332;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     }
 
     .rail-section .hero {
@@ -601,56 +750,31 @@
     .leaflet-tooltip.ward-tip::before {
       border-top-color: rgba(26, 35, 50, 0.94);
     }
-
-    @media (max-width: 768px) {
-      .app {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-      }
-
-      .map-panel {
-        height: 55vh;
-        min-height: 280px;
-      }
-
-      .rail {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--rail-border);
-        max-height: none;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="map-panel">
-      <div id="map"></div>
-      <div id="boot-status" class="boot-status">Starting…</div>
-      <div id="computing" class="computing" aria-live="polite">Computing…</div>
-      <div class="map-view-toggle" role="group" aria-label="Map view">
-        <button type="button" data-map-view="wards" class="active">Ward map</button>
-        <button type="button" data-map-view="streets">Street detail</button>
-      </div>
-      <div class="map-legend" aria-hidden="true">
-        <div class="map-legend-title">Map key</div>
-        <div class="legend-row"><span class="legend-dot" style="background:#fff;border:2px solid #1a2332"></span> Candidate pin</div>
-        <div class="legend-row"><span class="legend-dot" style="background:var(--blinkit);opacity:0.55"></span> Blinkit</div>
-        <div class="legend-row"><span class="legend-dot" style="background:var(--zepto);opacity:0.55"></span> Zepto</div>
-        <div class="legend-row"><span class="legend-dot" style="background:var(--instamart);opacity:0.55"></span> Instamart</div>
-        <div class="legend-row"><span class="legend-dot hollow" style="color:var(--text-muted)"></span> Modeled</div>
-        <div class="choropleth-ramp">
-          <div class="ramp-title">Population density (2011 census)</div>
-          <div class="zone-swatches" id="zone-swatches"></div>
-        </div>
-      </div>
-    </div>
-
     <aside class="rail">
       <div class="rail-section">
         <h1 class="intro-headline">Where should your next dark store go?</h1>
         <p class="instruction">Drag the white pin anywhere on the map. Watch net-new orders rise where coverage is thin and fall where you cannibalize your own stores.</p>
+
+        <div class="recommend-block">
+          <h2 class="section-heading">Site recommendation</h2>
+          <label class="control-label" for="stores-to-add">Stores to add</label>
+          <input type="number" class="num-input" id="stores-to-add" min="1" max="5" step="1" value="1" aria-label="Number of dark stores to add">
+
+          <span class="control-label" style="margin-top:10px">Optimize for</span>
+          <div class="optimize-grid" role="group" aria-label="Optimization goal">
+            <button type="button" data-optimize="netNew" class="active">Net new orders</button>
+            <button type="button" data-optimize="captured">Total capture</button>
+            <button type="button" data-optimize="population">New population covered</button>
+            <button type="button" data-optimize="efficiency">Net-new share (min cannibalization)</button>
+          </div>
+          <button type="button" class="btn-recommend" id="btn-recommend">Recommend locations</button>
+          <div class="recommend-results" id="recommend-results" aria-live="polite"></div>
+        </div>
+
         <div class="hero">
           <div class="hero-net" id="hero-net">0</div>
           <div class="hero-net-label">Net new orders/day</div>
@@ -731,12 +855,37 @@
         </div>
       </div>
     </aside>
+
+    <div class="map-panel">
+      <div id="map"></div>
+      <div id="boot-status" class="boot-status">Starting…</div>
+      <div id="computing" class="computing" aria-live="polite">Computing…</div>
+      <div class="map-view-toggle" role="group" aria-label="Map view">
+        <button type="button" data-map-view="wards" class="active">Ward map</button>
+        <button type="button" data-map-view="streets">Street detail</button>
+      </div>
+      <div class="map-legend" aria-hidden="true">
+        <div class="map-legend-title">Map key</div>
+        <div class="legend-row"><span class="legend-dot" style="background:#fff;border:2px solid #1a2332"></span> Candidate pin</div>
+        <div class="legend-row"><span class="legend-dot" style="background:var(--blinkit);opacity:0.55"></span> Blinkit</div>
+        <div class="legend-row"><span class="legend-dot" style="background:var(--zepto);opacity:0.55"></span> Zepto</div>
+        <div class="legend-row"><span class="legend-dot" style="background:var(--instamart);opacity:0.55"></span> Instamart</div>
+        <div class="legend-row"><span class="legend-dot hollow" style="color:var(--text-muted)"></span> Modeled</div>
+        <div class="choropleth-ramp">
+          <div class="ramp-title">Population density (2011 census)</div>
+          <div class="zone-swatches" id="zone-swatches"></div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <script src="lib/leaflet.js"></script>
   <script>
     let computeCatchment;
     let marginalImpact;
+    let haversineKm;
 
     function setBootStatus(msg) {
       const el = document.getElementById("boot-status");
@@ -815,8 +964,6 @@
       "Zepto": "op-zepto",
       "Swiggy Instamart": "op-instamart",
     };
-
-    let haversineKm;
 
     // ---- Ward demand points (centroids of BBMP wards) -------------------------
     function ringCentroid(ring) {
@@ -1001,6 +1148,7 @@
     let map;
     let storeLayer;
     let candidateMarker;
+    let recommendationLayer = null;
     let baseTileLayer = null;
     let streetTileLayer = null;
     let state = {
@@ -1011,6 +1159,8 @@
       maxReachKm: 2.5,
       beta: 2.0,
       ordersPerK: 12,
+      storesToAdd: 1,
+      optimizeFor: "netNew",
     };
 
     let footprintResult = null;
@@ -1035,6 +1185,179 @@
     function existingForCandidate() {
       const op = candidateOperator();
       return stores.filter((s) => s.operator === op);
+    }
+
+    function wardNameForHex(hexId) {
+      if (!wardGeoJSON) return hexId;
+      const f = wardGeoJSON.features.find((w) => "w" + w.properties.ward_no === hexId);
+      return f ? f.properties.ward_name : hexId;
+    }
+
+    const OPTIMIZE_LABELS = {
+      netNew: "net-new orders",
+      captured: "total capture",
+      population: "new population",
+      efficiency: "net-new share",
+    };
+
+    function impactScore(impact, metric) {
+      if (metric === "netNew") return impact.netNew;
+      if (metric === "captured") return impact.capturedByNew;
+      if (metric === "population") return impact.newPopulationCovered;
+      if (metric === "efficiency") {
+        return impact.capturedByNew > 0 ? impact.netNew / impact.capturedByNew : -1;
+      }
+      return impact.netNew;
+    }
+
+    function isBetterScore(score, best, metric) {
+      if (metric === "efficiency" || metric === "netNew" || metric === "captured" || metric === "population") {
+        return score > best;
+      }
+      return score > best;
+    }
+
+    function recommendSites(count, metric) {
+      const existing = existingForCandidate().map((s) => ({ ...s }));
+      const placed = [];
+      const minSepKm = Math.max(1.2, state.maxReachKm * 0.45);
+
+      for (let i = 0; i < count; i++) {
+        let best = null;
+        let bestScore = -Infinity;
+
+        for (const h of hexes) {
+          if (placed.some((p) => p.hexId === h.id)) continue;
+          if (placed.some((p) => haversineKm(h.lat, h.lng, p.lat, p.lng) < minSepKm)) continue;
+
+          const candidate = {
+            id: "rec-" + i,
+            operator: candidateOperator(),
+            lat: h.lat,
+            lng: h.lng,
+            source: "candidate",
+          };
+          const impact = marginalImpact(hexes, existing, candidate, getOpts());
+          const score = impactScore(impact, metric);
+          if (score <= 0 && metric !== "population") continue;
+          if (!isBetterScore(score, bestScore, metric)) continue;
+
+          bestScore = score;
+          best = {
+            hexId: h.id,
+            lat: h.lat,
+            lng: h.lng,
+            name: wardNameForHex(h.id),
+            impact,
+            score,
+          };
+        }
+
+        if (!best) break;
+
+        placed.push(best);
+        existing.push({
+          id: "rec-" + i,
+          operator: candidateOperator(),
+          lat: best.lat,
+          lng: best.lng,
+          source: "candidate",
+        });
+      }
+
+      return placed;
+    }
+
+    function formatImpactLine(site, metric) {
+      const i = site.impact;
+      if (metric === "captured") return fmt(i.capturedByNew) + " captured/day";
+      if (metric === "population") return fmt(i.newPopulationCovered) + " people";
+      if (metric === "efficiency") {
+        const share = i.capturedByNew > 0 ? Math.round((i.netNew / i.capturedByNew) * 100) : 0;
+        return share + "% net-new (" + fmt(i.netNew) + "/day)";
+      }
+      return fmt(i.netNew) + " net-new/day";
+    }
+
+    function renderRecommendationResults(sites) {
+      const el = document.getElementById("recommend-results");
+      if (!el) return;
+      if (!sites.length) {
+        el.innerHTML = "<p>No strong sites found for this operator and model settings. Try increasing reach or switching operator.</p>";
+        return;
+      }
+
+      const metric = state.optimizeFor;
+      const items = sites.map((s, idx) =>
+        `<li><strong>${idx + 1}. ${s.name}</strong> — ${formatImpactLine(s, metric)}</li>`
+      ).join("");
+
+      const totalNet = sites.reduce((a, s) => a + s.impact.netNew, 0);
+      const totalCap = sites.reduce((a, s) => a + s.impact.capturedByNew, 0);
+      const totalPop = sites.reduce((a, s) => a + s.impact.newPopulationCovered, 0);
+
+      el.innerHTML =
+        `<p>Best ${sites.length === 1 ? "site" : sites.length + " sites"} for <strong>${OPTIMIZE_LABELS[metric]}</strong>:</p>` +
+        `<ol>${items}</ol>` +
+        (sites.length > 1
+          ? `<p class="recommend-summary">Combined: ${fmt(totalNet)} net-new/day · ${fmt(totalCap)} captured/day · ${fmt(totalPop)} new population</p>`
+          : "");
+    }
+
+    function clearRecommendationMarkers() {
+      if (recommendationLayer) recommendationLayer.clearLayers();
+    }
+
+    function buildRecommendPinIcon(label) {
+      return L.divIcon({
+        className: "recommend-marker",
+        html: `<div class="recommend-pin">${label}</div>`,
+        iconSize: [26, 26],
+        iconAnchor: [13, 13],
+      });
+    }
+
+    function applyRecommendations(sites) {
+      if (!sites.length || !candidateMarker || !map) return;
+
+      clearRecommendationMarkers();
+
+      if (sites.length === 1) {
+        candidateMarker.setLatLng([sites[0].lat, sites[0].lng]);
+        map.flyTo([sites[0].lat, sites[0].lng], Math.max(map.getZoom(), 12), { duration: 0.6 });
+        runMarginal();
+        return;
+      }
+
+      candidateMarker.setLatLng([sites[0].lat, sites[0].lng]);
+      runMarginal();
+
+      for (let i = 1; i < sites.length; i++) {
+        const s = sites[i];
+        L.marker([s.lat, s.lng], {
+          icon: buildRecommendPinIcon(i + 1),
+          interactive: false,
+          zIndexOffset: 1500,
+        }).addTo(recommendationLayer);
+      }
+
+      const bounds = L.latLngBounds(sites.map((s) => [s.lat, s.lng]));
+      map.flyToBounds(bounds.pad(0.2), { duration: 0.6, maxZoom: 13 });
+    }
+
+    function runRecommendation() {
+      const btn = document.getElementById("btn-recommend");
+      if (btn) btn.disabled = true;
+      showComputingSoon();
+
+      requestAnimationFrame(() => {
+        const count = Math.min(5, Math.max(1, state.storesToAdd));
+        const sites = recommendSites(count, state.optimizeFor);
+        renderRecommendationResults(sites);
+        applyRecommendations(sites);
+        hideComputing();
+        if (btn) btn.disabled = false;
+      });
     }
 
     function verdictText(share, captured) {
@@ -1227,7 +1550,11 @@
         draggable: true,
         zIndexOffset: 2000,
       });
-      marker.on("dragstart", hideDragHint);
+      marker.on("dragstart", () => {
+        hideDragHint();
+        clearRecommendationMarkers();
+        document.getElementById("recommend-results").innerHTML = "";
+      });
       marker.on("drag", scheduleMarginal);
       marker.on("dragend", runMarginal);
       return marker;
@@ -1257,6 +1584,7 @@
       map.invalidateSize();
       buildWardLayer().addTo(map);
       reachHighlightLayer = L.layerGroup().addTo(map);
+      recommendationLayer = L.layerGroup().addTo(map);
       storeLayer = buildStoreLayer();
       storeLayer.addTo(map);
       candidateMarker = buildCandidateMarker();
@@ -1276,6 +1604,7 @@
           btn.classList.add("active");
           state.mode = btn.dataset.mode;
           scheduleFootprintDebounced();
+          runRecommendation();
         });
       });
 
@@ -1286,6 +1615,7 @@
           state.activeOp = btn.dataset.op;
           updateStoreStyles();
           scheduleFootprintDebounced();
+          runRecommendation();
         });
       });
 
@@ -1313,6 +1643,21 @@
           if (sl.key === "maxReachKm") updateReachHighlight();
         });
       }
+
+      document.getElementById("stores-to-add").addEventListener("change", (e) => {
+        state.storesToAdd = Math.min(5, Math.max(1, Number(e.target.value) || 1));
+        e.target.value = String(state.storesToAdd);
+      });
+
+      document.querySelectorAll("[data-optimize]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-optimize]").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          state.optimizeFor = btn.dataset.optimize;
+        });
+      });
+
+      document.getElementById("btn-recommend").addEventListener("click", runRecommendation);
     }
 
     async function boot() {
@@ -1345,6 +1690,7 @@
         syncSlidersFromState();
         wireControls();
         runFootprint();
+        runRecommendation();
         setBootStatus("");
       } catch (err) {
         showFatalError(err);
